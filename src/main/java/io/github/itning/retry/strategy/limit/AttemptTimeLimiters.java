@@ -42,23 +42,9 @@ public class AttemptTimeLimiters {
     }
 
     /**
-     * For control over thread management, it is preferable to offer an {@link ExecutorService} through the other
-     * factory method, {@link #fixedTimeLimit(long, TimeUnit, ExecutorService)}. See the note on
-     * {@link SimpleTimeLimiter#create(ExecutorService)}, which this AttemptTimeLimiter uses.
+     * For control over thread management.
+     * See the note on {@link SimpleTimeLimiter#create(ExecutorService)}, which this AttemptTimeLimiter uses.
      *
-     * @param duration that an attempt may persist before being circumvented
-     * @param timeUnit of the 'duration' arg
-     * @param <V>      the type of the computation result
-     * @return an {@link AttemptTimeLimiter} with a fixed time limit for each attempt
-     * @deprecated use {@link #fixedTimeLimit(long, TimeUnit, ExecutorService)} instead
-     */
-    @Deprecated
-    public static <V> AttemptTimeLimiter<V> fixedTimeLimit(long duration, @Nonnull TimeUnit timeUnit) {
-        Objects.requireNonNull(timeUnit);
-        return new FixedAttemptTimeLimit<>(duration, timeUnit);
-    }
-
-    /**
      * @param duration        that an attempt may persist before being circumvented
      * @param timeUnit        of the 'duration' arg
      * @param executorService used to enforce time limit

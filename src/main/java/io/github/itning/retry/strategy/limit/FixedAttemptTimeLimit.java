@@ -8,7 +8,6 @@ import javax.annotation.concurrent.Immutable;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,24 +19,9 @@ import java.util.concurrent.TimeUnit;
 @Immutable
 public final class FixedAttemptTimeLimit<V> implements AttemptTimeLimiter<V> {
 
-    private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
     private final TimeLimiter timeLimiter;
     private final long duration;
     private final TimeUnit timeUnit;
-
-
-    /**
-     * constructor
-     *
-     * @param duration duration
-     * @param timeUnit timeUnit
-     * @deprecated use {@link #FixedAttemptTimeLimit(long, TimeUnit, ExecutorService)} instead
-     */
-    @Deprecated
-    public FixedAttemptTimeLimit(long duration, @Nonnull TimeUnit timeUnit) {
-        this(SimpleTimeLimiter.create(EXECUTOR_SERVICE), duration, timeUnit);
-    }
 
     public FixedAttemptTimeLimit(long duration, @Nonnull TimeUnit timeUnit, @Nonnull ExecutorService executorService) {
         this(SimpleTimeLimiter.create(executorService), duration, timeUnit);
