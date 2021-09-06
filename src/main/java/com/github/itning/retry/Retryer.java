@@ -186,6 +186,25 @@ public final class Retryer<V> {
     }
 
     /**
+     * A call with no return value
+     *
+     * @param runnable the runnable task to be executed
+     * @throws ExecutionException if the given callable throws an exception, and the
+     *                            rejection predicate considers the attempt as successful. The original exception
+     *                            is wrapped into an ExecutionException.
+     * @throws RetryException     if all the attempts failed before the stop strategy decided
+     *                            to abort, or the thread was interrupted. Note that if the thread is interrupted,
+     *                            this exception is thrown and the thread's interrupt status is set.
+     * @see #call(Callable)
+     */
+    public void call(Runnable runnable) throws ExecutionException, RetryException {
+        this.call(() -> {
+            runnable.run();
+            return null;
+        });
+    }
+
+    /**
      * Wraps the given {@link Callable} in a {@link RetryerCallable}, which can
      * be submitted to an executor. The returned {@link RetryerCallable} uses
      * this {@link Retryer} instance to call the given {@link Callable}.
