@@ -16,9 +16,9 @@ that might be useful for situations where more well-behaved service polling is p
 ## Maven
 ```xml
 <dependency>
-	<groupId>io.github.itning</groupId>
-	<artifactId>guava-retrying3</artifactId>
-	<version>3.0.0-BETA0</version>
+    <groupId>io.github.itning</groupId>
+    <artifactId>guava-retrying3</artifactId>
+    <version>3.0.0-BETA0</version>
 </dependency>
 ```
 
