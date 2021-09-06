@@ -1,0 +1,1 @@
+mvn -s D:\maven\conf\nexus-aliyun-settings-upload.xml deploy
