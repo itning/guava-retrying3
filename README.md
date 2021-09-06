@@ -1,4 +1,25 @@
-[![Build Status](http://img.shields.io/travis/rholder/guava-retrying.svg)](https://travis-ci.org/rholder/guava-retrying) [![Latest Version](http://img.shields.io/badge/latest-2.0.0-brightgreen.svg)](https://github.com/rholder/guava-retrying/releases/tag/v2.0.0) [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/guava-retrying/blob/master/LICENSE)
+<h1 align="center">
+guava-retring3
+</h1>
+
+<div align="center">
+
+A basic guava retry library.
+
+[![GitHub stars](https://img.shields.io/github/stars/itning/guava-retrying3.svg?style=social&label=Stars)](https://github.com/itning/guava-retrying3/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/itning/guava-retrying3.svg?style=social&label=Fork)](https://github.com/itning/guava-retrying3/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/itning/guava-retrying3.svg?style=social&label=Watch)](https://github.com/itning/guava-retrying3/watchers)
+[![GitHub followers](https://img.shields.io/github/followers/itning.svg?style=social&label=Follow)](https://github.com/itning?tab=followers)
+
+[![GitHub issues](https://img.shields.io/github/issues/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3/issues)
+[![GitHub license](https://img.shields.io/github/license/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3/blob/main/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3/commits)
+[![GitHub release](https://img.shields.io/github/release/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3/releases)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3)
+[![language](https://img.shields.io/badge/language-JAVA-green.svg)](https://github.com/itning/guava-retrying3)
+
+</div>
+
 
 # Notice
 This is a personal maintenance version, which is not compatible with the API of the [original library](https://github.com/rholder/guava-retrying)
