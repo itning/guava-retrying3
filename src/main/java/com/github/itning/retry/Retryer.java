@@ -163,16 +163,17 @@ public final class Retryer<V> {
                 attempt = new ExceptionAttempt<V>(t, attemptNumber, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
             }
 
-            for (RetryListener listener : listeners) {
-                listener.onRetry(attempt);
-            }
-
             if (!rejectionPredicate.apply(attempt)) {
                 return attempt.get();
             }
             if (stopStrategy.shouldStop(attempt)) {
                 throw new RetryException(attemptNumber, attempt);
             } else {
+
+                for (RetryListener listener : listeners) {
+                    listener.onRetry(attempt);
+                }
+
                 long sleepTime = waitStrategy.computeSleepTime(attempt);
                 try {
                     blockStrategy.block(sleepTime);
