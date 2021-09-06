@@ -14,23 +14,20 @@
  * limitations under the License.
  */
 
-package com.github.itning.retry;
-
-import java.util.concurrent.Callable;
+package io.github.itning.retry;
 
 /**
- * A rule to wrap any single attempt in a time limit, where it will possibly be interrupted if the limit is exceeded.
+ * A strategy used to decide how long to sleep before retrying after a failed attempt.
  *
- * @param <V> return type of Callable
- * @author Jason Dunkelberger (dirkraft)
+ * @author JB
  */
-public interface AttemptTimeLimiter<V> {
+public interface WaitStrategy {
+
     /**
-     * Call this method to achieve the purpose of retry
+     * Returns the time, in milliseconds, to sleep before retrying.
      *
-     * @param callable to subject to the time limit
-     * @return the return of the given callable
-     * @throws Exception any exception from this invocation
+     * @param failedAttempt the previous failed {@code Attempt}
+     * @return the sleep time before next attempt
      */
-    V call(Callable<V> callable) throws Exception;
+    long computeSleepTime(Attempt failedAttempt);
 }

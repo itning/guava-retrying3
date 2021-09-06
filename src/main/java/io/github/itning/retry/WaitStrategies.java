@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.itning.retry;
+package io.github.itning.retry;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;

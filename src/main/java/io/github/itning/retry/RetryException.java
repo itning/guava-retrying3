@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.itning.retry;
+package io.github.itning.retry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;

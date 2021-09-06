@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.itning.retry;
+package io.github.itning.retry;
 
 /**
  * A strategy used to decide if a retryer must stop retrying after a failed attempt or not.

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.github.itning.retry;
+package io.github.itning.retry;
 
-import com.github.itning.retry.Retryer.RetryerCallable;
+import io.github.itning.retry.Retryer.RetryerCallable;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import org.junit.jupiter.api.Test;
