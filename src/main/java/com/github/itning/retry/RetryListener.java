@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
 
-import java.util.concurrent.Callable;
+import com.google.common.annotations.Beta;
 
 /**
- * A rule to wrap any single attempt in a time limit, where it will possibly be interrupted if the limit is exceeded.
- *
- * @param <V> return type of Callable
- * @author Jason Dunkelberger (dirkraft)
+ * This listener provides callbacks for several events that occur when running
+ * code through a {@link Retryer} instance.
  */
-public interface AttemptTimeLimiter<V> {
+@Beta
+public interface RetryListener {
+
     /**
-     * @param callable to subject to the time limit
-     * @return the return of the given callable
-     * @throws Exception any exception from this invocation
+     * This method with fire no matter what the result is and before the
+     * rejection predicate and stop strategies are applied.
+     *
+     * @param attempt the current {@link Attempt}
+     * @param <V>     the type returned by the retryer callable
      */
-    V call(Callable<V> callable) throws Exception;
+    <V> void onRetry(Attempt<V> attempt);
 }

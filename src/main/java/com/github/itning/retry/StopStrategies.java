@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
 
 import java.util.concurrent.TimeUnit;
 

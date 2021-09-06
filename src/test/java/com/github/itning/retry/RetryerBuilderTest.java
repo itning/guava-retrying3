@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
 
-import com.github.rholder.retry.Retryer.RetryerCallable;
+import com.github.itning.retry.*;
+import com.github.itning.retry.Retryer.RetryerCallable;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,11 +33,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class RetryerBuilderTest {
 

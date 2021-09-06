@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;

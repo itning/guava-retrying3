@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
 
 /**
  * This is a strategy used to decide how a retryer should block between retry
@@ -27,7 +27,7 @@ public interface BlockStrategy {
      * Attempt to block for the designated amount of time. Implementations
      * that don't block or otherwise delay the processing from within this
      * method for the given sleep duration can significantly modify the behavior
-     * of any configured {@link com.github.rholder.retry.WaitStrategy}. Caution
+     * of any configured {@link WaitStrategy}. Caution
      * is advised when generating your own implementations.
      *
      * @param sleepTime the computed sleep duration in milliseconds

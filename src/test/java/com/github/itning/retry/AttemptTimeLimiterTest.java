@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
 
 import com.google.common.util.concurrent.UncheckedTimeoutException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author Jason Dunkelberger (dirkraft)
@@ -38,15 +40,15 @@ public class AttemptTimeLimiterTest {
         try {
             r.call(new SleepyOut(0L));
         } catch (ExecutionException e) {
-            Assert.fail("Should not timeout");
+            fail("Should not timeout");
         }
 
         try {
             r.call(new SleepyOut(10 * 1000L));
-            Assert.fail("Expected timeout exception");
+            fail("Expected timeout exception");
         } catch (ExecutionException e) {
             // expected
-            Assert.assertEquals(UncheckedTimeoutException.class, e.getCause().getClass());
+            assertEquals(UncheckedTimeoutException.class, e.getCause().getClass());
         }
     }
 

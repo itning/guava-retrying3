@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package com.github.rholder.retry;
+package com.github.itning.retry;
+
+import java.util.concurrent.Callable;
 
 /**
- * A strategy used to decide if a retryer must stop retrying after a failed attempt or not.
+ * A rule to wrap any single attempt in a time limit, where it will possibly be interrupted if the limit is exceeded.
  *
- * @author JB
+ * @param <V> return type of Callable
+ * @author Jason Dunkelberger (dirkraft)
  */
-public interface StopStrategy {
-
+public interface AttemptTimeLimiter<V> {
     /**
-     * Returns <code>true</code> if the retryer should stop retrying.
-     *
-     * @param failedAttempt the previous failed {@code Attempt}
-     * @return <code>true</code> if the retryer must stop, <code>false</code> otherwise
+     * @param callable to subject to the time limit
+     * @return the return of the given callable
+     * @throws Exception any exception from this invocation
      */
-    boolean shouldStop(Attempt failedAttempt);
+    V call(Callable<V> callable) throws Exception;
 }
