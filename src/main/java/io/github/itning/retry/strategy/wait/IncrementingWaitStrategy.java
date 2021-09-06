@@ -1,6 +1,5 @@
 package io.github.itning.retry.strategy.wait;
 
-import com.google.common.base.Preconditions;
 import io.github.itning.retry.Attempt;
 
 import javax.annotation.concurrent.Immutable;
@@ -16,7 +15,10 @@ public final class IncrementingWaitStrategy implements WaitStrategy {
 
     public IncrementingWaitStrategy(long initialSleepTime,
                                     long increment) {
-        Preconditions.checkArgument(initialSleepTime >= 0L, "initialSleepTime must be >= 0 but is %s", initialSleepTime);
+        if (initialSleepTime < 0L) {
+            throw new IllegalArgumentException("initialSleepTime must be >= 0 but is " + initialSleepTime);
+        }
+
         this.initialSleepTime = initialSleepTime;
         this.increment = increment;
     }

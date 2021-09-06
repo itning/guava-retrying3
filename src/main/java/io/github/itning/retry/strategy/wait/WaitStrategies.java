@@ -16,10 +16,8 @@
 
 package io.github.itning.retry.strategy.wait;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -222,9 +220,13 @@ public final class WaitStrategies {
      * @return A composite wait strategy
      */
     public static WaitStrategy join(WaitStrategy... waitStrategies) {
-        Preconditions.checkState(waitStrategies.length > 0, "Must have at least one wait strategy");
-        List<WaitStrategy> waitStrategyList = Lists.newArrayList(waitStrategies);
-        Preconditions.checkState(!waitStrategyList.contains(null), "Cannot have a null wait strategy");
+        if (waitStrategies.length <= 0) {
+            throw new IllegalStateException("Must have at least one wait strategy");
+        }
+        List<WaitStrategy> waitStrategyList = Arrays.asList(waitStrategies);
+        if (waitStrategyList.contains(null)) {
+            throw new IllegalStateException("Cannot have a null wait strategy");
+        }
         return new CompositeWaitStrategy(waitStrategyList);
     }
 }

@@ -1,6 +1,5 @@
 package io.github.itning.retry.strategy.stop;
 
-import com.google.common.base.Preconditions;
 import io.github.itning.retry.Attempt;
 
 import javax.annotation.concurrent.Immutable;
@@ -14,7 +13,9 @@ public final class StopAfterDelayStrategy implements StopStrategy {
     private final long maxDelay;
 
     public StopAfterDelayStrategy(long maxDelay) {
-        Preconditions.checkArgument(maxDelay >= 0L, "maxDelay must be >= 0 but is %s", maxDelay);
+        if (maxDelay < 0L) {
+            throw new IllegalArgumentException("maxDelay must be >= 0 but is " + maxDelay);
+        }
         this.maxDelay = maxDelay;
     }
 

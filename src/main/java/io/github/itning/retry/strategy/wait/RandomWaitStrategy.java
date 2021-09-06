@@ -1,6 +1,5 @@
 package io.github.itning.retry.strategy.wait;
 
-import com.google.common.base.Preconditions;
 import io.github.itning.retry.Attempt;
 
 import javax.annotation.concurrent.Immutable;
@@ -17,9 +16,12 @@ public final class RandomWaitStrategy implements WaitStrategy {
     private final long maximum;
 
     public RandomWaitStrategy(long minimum, long maximum) {
-        Preconditions.checkArgument(minimum >= 0, "minimum must be >= 0 but is %s", minimum);
-        Preconditions.checkArgument(maximum > minimum, "maximum must be > minimum but maximum is %s and minimum is", maximum, minimum);
-
+        if (minimum < 0) {
+            throw new IllegalArgumentException("minimum must be >= 0 but is " + minimum);
+        }
+        if (maximum <= minimum) {
+            throw new IllegalArgumentException("maximum must be > minimum but maximum is " + maximum + " and minimum is " + minimum);
+        }
         this.minimum = minimum;
         this.maximum = maximum;
     }

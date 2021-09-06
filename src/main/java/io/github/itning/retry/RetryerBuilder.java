@@ -16,7 +16,6 @@
 
 package io.github.itning.retry;
 
-import com.google.common.base.Preconditions;
 import io.github.itning.retry.listener.RetryListener;
 import io.github.itning.retry.strategy.block.BlockStrategies;
 import io.github.itning.retry.strategy.block.BlockStrategy;
@@ -83,7 +82,9 @@ public class RetryerBuilder<V> {
      */
     public RetryerBuilder<V> withWaitStrategy(@Nonnull WaitStrategy waitStrategy) throws IllegalStateException {
         Objects.requireNonNull(waitStrategy, "waitStrategy may not be null");
-        Preconditions.checkState(this.waitStrategy == null, "a wait strategy has already been set %s", this.waitStrategy);
+        if (this.waitStrategy != null) {
+            throw new IllegalStateException("a wait strategy has already been set " + this.waitStrategy);
+        }
         this.waitStrategy = waitStrategy;
         return this;
     }
@@ -97,7 +98,9 @@ public class RetryerBuilder<V> {
      */
     public RetryerBuilder<V> withStopStrategy(@Nonnull StopStrategy stopStrategy) throws IllegalStateException {
         Objects.requireNonNull(stopStrategy, "stopStrategy may not be null");
-        Preconditions.checkState(this.stopStrategy == null, "a stop strategy has already been set %s", this.stopStrategy);
+        if (this.stopStrategy != null) {
+            throw new IllegalStateException("a stop strategy has already been set " + this.stopStrategy);
+        }
         this.stopStrategy = stopStrategy;
         return this;
     }
@@ -112,7 +115,9 @@ public class RetryerBuilder<V> {
      */
     public RetryerBuilder<V> withBlockStrategy(@Nonnull BlockStrategy blockStrategy) throws IllegalStateException {
         Objects.requireNonNull(blockStrategy, "blockStrategy may not be null");
-        Preconditions.checkState(this.blockStrategy == null, "a block strategy has already been set %s", this.blockStrategy);
+        if (this.blockStrategy != null) {
+            throw new IllegalStateException("a block strategy has already been set " + this.blockStrategy);
+        }
         this.blockStrategy = blockStrategy;
         return this;
     }

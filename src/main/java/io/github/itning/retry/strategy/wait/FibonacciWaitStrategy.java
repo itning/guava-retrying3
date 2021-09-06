@@ -1,6 +1,5 @@
 package io.github.itning.retry.strategy.wait;
 
-import com.google.common.base.Preconditions;
 import io.github.itning.retry.Attempt;
 
 import javax.annotation.concurrent.Immutable;
@@ -15,9 +14,16 @@ public final class FibonacciWaitStrategy implements WaitStrategy {
     private final long maximumWait;
 
     public FibonacciWaitStrategy(long multiplier, long maximumWait) {
-        Preconditions.checkArgument(multiplier > 0L, "multiplier must be > 0 but is %s", multiplier);
-        Preconditions.checkArgument(maximumWait >= 0L, "maximumWait must be >= 0 but is %s", maximumWait);
-        Preconditions.checkArgument(multiplier < maximumWait, "multiplier must be < maximumWait but is %s", multiplier);
+        if (multiplier <= 0L) {
+            throw new IllegalArgumentException("multiplier must be > 0 but is " + multiplier);
+        }
+        if (maximumWait < 0L) {
+            throw new IllegalArgumentException("maximumWait must be >= 0 but is " + maximumWait);
+        }
+        if (multiplier >= maximumWait) {
+            throw new IllegalArgumentException("multiplier must be < maximumWait but is " + multiplier);
+        }
+
         this.multiplier = multiplier;
         this.maximumWait = maximumWait;
     }
