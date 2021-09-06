@@ -10,6 +10,27 @@
 
     <name>guava-retrying3</name>
     <description>guava retrying3 is a basic guava retry library</description>
+    <url>https://github.com/itning/guava-retrying3</url>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>scm:git@github.com:itning/guava-retrying3.git</url>
+        <connection>scm:git@github.com:itning/guava-retrying3.git</connection>
+        <developerConnection>scm:git@github.com:itning/guava-retrying3.git</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>itning</name>
+            <email>itning666@gmail.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <java.version>1.8</java.version>
