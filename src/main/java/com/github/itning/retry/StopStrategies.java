@@ -115,7 +115,7 @@ public final class StopStrategies {
         private final long maxDelay;
 
         public StopAfterDelayStrategy(long maxDelay) {
-            Preconditions.checkArgument(maxDelay >= 0L, "maxDelay must be >= 0 but is %d", maxDelay);
+            Preconditions.checkArgument(maxDelay >= 0L, "maxDelay must be >= 0 but is %s", maxDelay);
             this.maxDelay = maxDelay;
         }
 
