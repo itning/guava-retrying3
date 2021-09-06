@@ -18,7 +18,6 @@ package com.github.itning.retry;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -27,6 +26,7 @@ import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 /**
  * A retryer, which executes a call, and retries it until it succeeds, or
@@ -64,7 +64,7 @@ public final class Retryer<V> {
                    @Nonnull WaitStrategy waitStrategy,
                    @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
 
-        this(AttemptTimeLimiters.<V>noTimeLimit(), stopStrategy, waitStrategy, BlockStrategies.threadSleepStrategy(), rejectionPredicate);
+        this(AttemptTimeLimiters.noTimeLimit(), stopStrategy, waitStrategy, BlockStrategies.threadSleepStrategy(), rejectionPredicate);
     }
 
     /**
@@ -100,7 +100,7 @@ public final class Retryer<V> {
                    @Nonnull WaitStrategy waitStrategy,
                    @Nonnull BlockStrategy blockStrategy,
                    @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
-        this(attemptTimeLimiter, stopStrategy, waitStrategy, blockStrategy, rejectionPredicate, new ArrayList<RetryListener>());
+        this(attemptTimeLimiter, stopStrategy, waitStrategy, blockStrategy, rejectionPredicate, new ArrayList<>());
     }
 
     /**
@@ -158,12 +158,12 @@ public final class Retryer<V> {
             Attempt<V> attempt;
             try {
                 V result = attemptTimeLimiter.call(callable);
-                attempt = new ResultAttempt<V>(result, attemptNumber, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
+                attempt = new ResultAttempt<>(result, attemptNumber, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
             } catch (Throwable t) {
-                attempt = new ExceptionAttempt<V>(t, attemptNumber, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
+                attempt = new ExceptionAttempt<>(t, attemptNumber, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
             }
 
-            if (!rejectionPredicate.apply(attempt)) {
+            if (!rejectionPredicate.test(attempt)) {
                 return attempt.get();
             }
             if (stopStrategy.shouldStop(attempt)) {
@@ -194,7 +194,7 @@ public final class Retryer<V> {
      * @return a {@link RetryerCallable} that behaves like the given {@link Callable} with retry behavior defined by this {@link Retryer}
      */
     public RetryerCallable<V> wrap(Callable<V> callable) {
-        return new RetryerCallable<V>(this, callable);
+        return new RetryerCallable<>(this, callable);
     }
 
     @Immutable
@@ -300,8 +300,8 @@ public final class Retryer<V> {
      * @author JB
      */
     public static class RetryerCallable<X> implements Callable<X> {
-        private Retryer<X> retryer;
-        private Callable<X> callable;
+        private final Retryer<X> retryer;
+        private final Callable<X> callable;
 
         private RetryerCallable(Retryer<X> retryer,
                                 Callable<X> callable) {

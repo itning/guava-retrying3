@@ -16,7 +16,6 @@
 
 package com.github.itning.retry;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
@@ -25,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 /**
  * Factory class for instances of {@link WaitStrategy}.
@@ -212,7 +212,7 @@ public final class WaitStrategies {
                                                                    @Nonnull Function<T, Long> function) {
         Preconditions.checkNotNull(exceptionClass, "exceptionClass may not be null");
         Preconditions.checkNotNull(function, "function may not be null");
-        return new ExceptionWaitStrategy<T>(exceptionClass, function);
+        return new ExceptionWaitStrategy<>(exceptionClass, function);
     }
 
     /**
@@ -280,7 +280,7 @@ public final class WaitStrategies {
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
             long result = initialSleepTime + (increment * (failedAttempt.getAttemptNumber() - 1));
-            return result >= 0L ? result : 0L;
+            return Math.max(result, 0L);
         }
     }
 
@@ -305,7 +305,7 @@ public final class WaitStrategies {
             if (result > maximumWait) {
                 result = maximumWait;
             }
-            return result >= 0L ? result : 0L;
+            return Math.max(result, 0L);
         }
     }
 
@@ -331,12 +331,16 @@ public final class WaitStrategies {
                 result = maximumWait;
             }
 
-            return result >= 0L ? result : 0L;
+            return Math.max(result, 0L);
         }
 
         private long fib(long n) {
-            if (n == 0L) return 0L;
-            if (n == 1L) return 1L;
+            if (n == 0L) {
+                return 0L;
+            }
+            if (n == 1L) {
+                return 1L;
+            }
 
             long prevPrev = 0L;
             long prev = 1L;
@@ -381,7 +385,7 @@ public final class WaitStrategies {
             this.function = function;
         }
 
-        @SuppressWarnings({"ThrowableResultOfMethodCallIgnored", "ConstantConditions", "unchecked"})
+        @SuppressWarnings({"ThrowableResultOfMethodCallIgnored", "unchecked"})
         @Override
         public long computeSleepTime(Attempt lastAttempt) {
             if (lastAttempt.hasException()) {

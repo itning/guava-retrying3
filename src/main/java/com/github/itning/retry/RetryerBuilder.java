@@ -17,12 +17,11 @@
 package com.github.itning.retry;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * A builder used to configure and create a {@link Retryer}.
@@ -36,8 +35,8 @@ public class RetryerBuilder<V> {
     private StopStrategy stopStrategy;
     private WaitStrategy waitStrategy;
     private BlockStrategy blockStrategy;
-    private Predicate<Attempt<V>> rejectionPredicate = Predicates.alwaysFalse();
-    private List<RetryListener> listeners = new ArrayList<RetryListener>();
+    private Predicate<Attempt<V>> rejectionPredicate = vAttempt -> false;
+    private final List<RetryListener> listeners = new ArrayList<>();
 
     private RetryerBuilder() {
     }
@@ -49,7 +48,7 @@ public class RetryerBuilder<V> {
      * @return the new builder
      */
     public static <V> RetryerBuilder<V> newBuilder() {
-        return new RetryerBuilder<V>();
+        return new RetryerBuilder<>();
     }
 
     /**
@@ -128,7 +127,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> retryIfException() {
-        rejectionPredicate = Predicates.or(rejectionPredicate, new ExceptionClassPredicate<V>(Exception.class));
+        rejectionPredicate = rejectionPredicate.or(new ExceptionClassPredicate<>(Exception.class));
         return this;
     }
 
@@ -139,7 +138,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> retryIfRuntimeException() {
-        rejectionPredicate = Predicates.or(rejectionPredicate, new ExceptionClassPredicate<V>(RuntimeException.class));
+        rejectionPredicate = rejectionPredicate.or(new ExceptionClassPredicate<>(RuntimeException.class));
         return this;
     }
 
@@ -152,7 +151,7 @@ public class RetryerBuilder<V> {
      */
     public RetryerBuilder<V> retryIfExceptionOfType(@Nonnull Class<? extends Throwable> exceptionClass) {
         Preconditions.checkNotNull(exceptionClass, "exceptionClass may not be null");
-        rejectionPredicate = Predicates.or(rejectionPredicate, new ExceptionClassPredicate<V>(exceptionClass));
+        rejectionPredicate = rejectionPredicate.or(new ExceptionClassPredicate<>(exceptionClass));
         return this;
     }
 
@@ -165,7 +164,7 @@ public class RetryerBuilder<V> {
      */
     public RetryerBuilder<V> retryIfException(@Nonnull Predicate<Throwable> exceptionPredicate) {
         Preconditions.checkNotNull(exceptionPredicate, "exceptionPredicate may not be null");
-        rejectionPredicate = Predicates.or(rejectionPredicate, new ExceptionPredicate<V>(exceptionPredicate));
+        rejectionPredicate = rejectionPredicate.or(new ExceptionPredicate<>(exceptionPredicate));
         return this;
     }
 
@@ -178,7 +177,7 @@ public class RetryerBuilder<V> {
      */
     public RetryerBuilder<V> retryIfResult(@Nonnull Predicate<V> resultPredicate) {
         Preconditions.checkNotNull(resultPredicate, "resultPredicate may not be null");
-        rejectionPredicate = Predicates.or(rejectionPredicate, new ResultPredicate<V>(resultPredicate));
+        rejectionPredicate = rejectionPredicate.or(new ResultPredicate<>(resultPredicate));
         return this;
     }
 
@@ -188,24 +187,24 @@ public class RetryerBuilder<V> {
      * @return the built retryer.
      */
     public Retryer<V> build() {
-        AttemptTimeLimiter<V> theAttemptTimeLimiter = attemptTimeLimiter == null ? AttemptTimeLimiters.<V>noTimeLimit() : attemptTimeLimiter;
+        AttemptTimeLimiter<V> theAttemptTimeLimiter = attemptTimeLimiter == null ? AttemptTimeLimiters.noTimeLimit() : attemptTimeLimiter;
         StopStrategy theStopStrategy = stopStrategy == null ? StopStrategies.neverStop() : stopStrategy;
         WaitStrategy theWaitStrategy = waitStrategy == null ? WaitStrategies.noWait() : waitStrategy;
         BlockStrategy theBlockStrategy = blockStrategy == null ? BlockStrategies.threadSleepStrategy() : blockStrategy;
 
-        return new Retryer<V>(theAttemptTimeLimiter, theStopStrategy, theWaitStrategy, theBlockStrategy, rejectionPredicate, listeners);
+        return new Retryer<>(theAttemptTimeLimiter, theStopStrategy, theWaitStrategy, theBlockStrategy, rejectionPredicate, listeners);
     }
 
     private static final class ExceptionClassPredicate<V> implements Predicate<Attempt<V>> {
 
-        private Class<? extends Throwable> exceptionClass;
+        private final Class<? extends Throwable> exceptionClass;
 
         public ExceptionClassPredicate(Class<? extends Throwable> exceptionClass) {
             this.exceptionClass = exceptionClass;
         }
 
         @Override
-        public boolean apply(Attempt<V> attempt) {
+        public boolean test(Attempt<V> attempt) {
             if (!attempt.hasException()) {
                 return false;
             }
@@ -215,36 +214,36 @@ public class RetryerBuilder<V> {
 
     private static final class ResultPredicate<V> implements Predicate<Attempt<V>> {
 
-        private Predicate<V> delegate;
+        private final Predicate<V> delegate;
 
         public ResultPredicate(Predicate<V> delegate) {
             this.delegate = delegate;
         }
 
         @Override
-        public boolean apply(Attempt<V> attempt) {
+        public boolean test(Attempt<V> attempt) {
             if (!attempt.hasResult()) {
                 return false;
             }
             V result = attempt.getResult();
-            return delegate.apply(result);
+            return delegate.test(result);
         }
     }
 
     private static final class ExceptionPredicate<V> implements Predicate<Attempt<V>> {
 
-        private Predicate<Throwable> delegate;
+        private final Predicate<Throwable> delegate;
 
         public ExceptionPredicate(Predicate<Throwable> delegate) {
             this.delegate = delegate;
         }
 
         @Override
-        public boolean apply(Attempt<V> attempt) {
+        public boolean test(Attempt<V> attempt) {
             if (!attempt.hasException()) {
                 return false;
             }
-            return delegate.apply(attempt.getExceptionCause());
+            return delegate.test(attempt.getExceptionCause());
         }
     }
 }

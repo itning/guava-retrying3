@@ -26,6 +26,8 @@ import java.util.concurrent.Callable;
  */
 public interface AttemptTimeLimiter<V> {
     /**
+     * Call this method to achieve the purpose of retry
+     *
      * @param callable to subject to the time limit
      * @return the return of the given callable
      * @throws Exception any exception from this invocation
