@@ -82,6 +82,7 @@
                 <configuration>
                     <charset>${project.build.sourceEncoding}</charset>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <failOnError>false</failOnError>
                 </configuration>
                 <executions>
                     <execution>
