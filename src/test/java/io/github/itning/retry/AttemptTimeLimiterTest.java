@@ -19,10 +19,7 @@ package io.github.itning.retry;
 import io.github.itning.retry.strategy.limit.AttemptTimeLimiters;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -32,8 +29,10 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public class AttemptTimeLimiterTest {
 
+    private static final ExecutorService EXECUTOR_SERVICE = Executors.newSingleThreadExecutor();
+
     Retryer<Void> r = RetryerBuilder.<Void>newBuilder()
-            .withAttemptTimeLimiter(AttemptTimeLimiters.fixedTimeLimit(1, TimeUnit.SECONDS))
+            .withAttemptTimeLimiter(AttemptTimeLimiters.fixedTimeLimit(1, TimeUnit.SECONDS, EXECUTOR_SERVICE))
             .build();
 
     @Test
