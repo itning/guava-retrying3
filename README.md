@@ -1,5 +1,5 @@
 <h1 align="center">
-guava-retring3
+guava-retrying3
 </h1>
 
 <div align="center">
