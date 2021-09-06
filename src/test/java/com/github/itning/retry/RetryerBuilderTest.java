@@ -394,7 +394,7 @@ public class RetryerBuilderTest {
                     retryer.call(alwaysNull(latch));
                     fail("RetryException expected");
                 } catch (RetryException e) {
-                    assertTrue(!e.getLastFailedAttempt().hasException());
+                    assertFalse(e.getLastFailedAttempt().hasException());
                     assertNull(e.getCause());
                     assertTrue(Thread.currentThread().isInterrupted());
                     result.set(true);
