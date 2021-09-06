@@ -16,15 +16,15 @@ that might be useful for situations where more well-behaved service polling is p
 ## Maven
 ```xml
     <dependency>
-      <groupId>com.github.rholder</groupId>
-      <artifactId>guava-retrying</artifactId>
-      <version>2.0.0</version>
+        <groupId>io.github.itning</groupId>
+        <artifactId>guava-retrying3</artifactId>
+        <version>3.0.0-BETA0</version>
     </dependency>
 ```
 
 ## Gradle
 ```groovy
-    compile "com.github.rholder:guava-retrying:2.0.0"
+    compile "io.github.itning:guava-retrying3:3.0.0-BETA0"
 ```
 
 ## Quickstart
