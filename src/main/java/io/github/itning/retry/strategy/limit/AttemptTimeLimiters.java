@@ -16,10 +16,10 @@
 
 package io.github.itning.retry.strategy.limit;
 
-import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +52,7 @@ public class AttemptTimeLimiters {
      * @return an {@link AttemptTimeLimiter} with a fixed time limit for each attempt
      */
     public static <V> AttemptTimeLimiter<V> fixedTimeLimit(long duration, @Nonnull TimeUnit timeUnit) {
-        Preconditions.checkNotNull(timeUnit);
+        Objects.requireNonNull(timeUnit);
         return new FixedAttemptTimeLimit<>(duration, timeUnit);
     }
 
@@ -64,7 +64,7 @@ public class AttemptTimeLimiters {
      * @return an {@link AttemptTimeLimiter} with a fixed time limit for each attempt
      */
     public static <V> AttemptTimeLimiter<V> fixedTimeLimit(long duration, @Nonnull TimeUnit timeUnit, @Nonnull ExecutorService executorService) {
-        Preconditions.checkNotNull(timeUnit);
+        Objects.requireNonNull(timeUnit);
         return new FixedAttemptTimeLimit<>(duration, timeUnit, executorService);
     }
 }

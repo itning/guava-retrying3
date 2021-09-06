@@ -16,8 +16,6 @@
 
 package io.github.itning.retry;
 
-import com.google.common.annotations.Beta;
-import com.google.common.base.Preconditions;
 import io.github.itning.retry.listener.RetryListener;
 import io.github.itning.retry.strategy.block.BlockStrategies;
 import io.github.itning.retry.strategy.block.BlockStrategy;
@@ -30,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -122,19 +121,18 @@ public final class Retryer<V> {
      *                           strategy indicates otherwise or the thread is interrupted.
      * @param listeners          collection of retry listeners
      */
-    @Beta
     public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter,
                    @Nonnull StopStrategy stopStrategy,
                    @Nonnull WaitStrategy waitStrategy,
                    @Nonnull BlockStrategy blockStrategy,
                    @Nonnull Predicate<Attempt<V>> rejectionPredicate,
                    @Nonnull Collection<RetryListener> listeners) {
-        Preconditions.checkNotNull(attemptTimeLimiter, "timeLimiter may not be null");
-        Preconditions.checkNotNull(stopStrategy, "stopStrategy may not be null");
-        Preconditions.checkNotNull(waitStrategy, "waitStrategy may not be null");
-        Preconditions.checkNotNull(blockStrategy, "blockStrategy may not be null");
-        Preconditions.checkNotNull(rejectionPredicate, "rejectionPredicate may not be null");
-        Preconditions.checkNotNull(listeners, "listeners may not null");
+        Objects.requireNonNull(attemptTimeLimiter, "timeLimiter may not be null");
+        Objects.requireNonNull(stopStrategy, "stopStrategy may not be null");
+        Objects.requireNonNull(waitStrategy, "waitStrategy may not be null");
+        Objects.requireNonNull(blockStrategy, "blockStrategy may not be null");
+        Objects.requireNonNull(rejectionPredicate, "rejectionPredicate may not be null");
+        Objects.requireNonNull(listeners, "listeners may not null");
 
         this.attemptTimeLimiter = attemptTimeLimiter;
         this.stopStrategy = stopStrategy;

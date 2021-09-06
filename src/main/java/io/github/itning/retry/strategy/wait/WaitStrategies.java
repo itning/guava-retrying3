@@ -21,6 +21,7 @@ import com.google.common.collect.Lists;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -54,7 +55,7 @@ public final class WaitStrategies {
      * @throws IllegalStateException if the sleep time is &lt; 0
      */
     public static WaitStrategy fixedWait(long sleepTime, @Nonnull TimeUnit timeUnit) throws IllegalStateException {
-        Preconditions.checkNotNull(timeUnit, "The time unit may not be null");
+        Objects.requireNonNull(timeUnit, "The time unit may not be null");
         return new FixedWaitStrategy(timeUnit.toMillis(sleepTime));
     }
 
@@ -67,7 +68,7 @@ public final class WaitStrategies {
      * @throws IllegalStateException if the maximum sleep time is &lt;= 0.
      */
     public static WaitStrategy randomWait(long maximumTime, @Nonnull TimeUnit timeUnit) {
-        Preconditions.checkNotNull(timeUnit, "The time unit may not be null");
+        Objects.requireNonNull(timeUnit, "The time unit may not be null");
         return new RandomWaitStrategy(0L, timeUnit.toMillis(maximumTime));
     }
 
@@ -86,8 +87,8 @@ public final class WaitStrategies {
                                           @Nonnull TimeUnit minimumTimeUnit,
                                           long maximumTime,
                                           @Nonnull TimeUnit maximumTimeUnit) {
-        Preconditions.checkNotNull(minimumTimeUnit, "The minimum time unit may not be null");
-        Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
+        Objects.requireNonNull(minimumTimeUnit, "The minimum time unit may not be null");
+        Objects.requireNonNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new RandomWaitStrategy(minimumTimeUnit.toMillis(minimumTime),
                 maximumTimeUnit.toMillis(maximumTime));
     }
@@ -107,8 +108,8 @@ public final class WaitStrategies {
                                                 @Nonnull TimeUnit initialSleepTimeUnit,
                                                 long increment,
                                                 @Nonnull TimeUnit incrementTimeUnit) {
-        Preconditions.checkNotNull(initialSleepTimeUnit, "The initial sleep time unit may not be null");
-        Preconditions.checkNotNull(incrementTimeUnit, "The increment time unit may not be null");
+        Objects.requireNonNull(initialSleepTimeUnit, "The initial sleep time unit may not be null");
+        Objects.requireNonNull(incrementTimeUnit, "The increment time unit may not be null");
         return new IncrementingWaitStrategy(initialSleepTimeUnit.toMillis(initialSleepTime),
                 incrementTimeUnit.toMillis(increment));
     }
@@ -133,7 +134,7 @@ public final class WaitStrategies {
      */
     public static WaitStrategy exponentialWait(long maximumTime,
                                                @Nonnull TimeUnit maximumTimeUnit) {
-        Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
+        Objects.requireNonNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new ExponentialWaitStrategy(1, maximumTimeUnit.toMillis(maximumTime));
     }
 
@@ -151,7 +152,7 @@ public final class WaitStrategies {
     public static WaitStrategy exponentialWait(long multiplier,
                                                long maximumTime,
                                                @Nonnull TimeUnit maximumTimeUnit) {
-        Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
+        Objects.requireNonNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new ExponentialWaitStrategy(multiplier, maximumTimeUnit.toMillis(maximumTime));
     }
 
@@ -175,7 +176,7 @@ public final class WaitStrategies {
      */
     public static WaitStrategy fibonacciWait(long maximumTime,
                                              @Nonnull TimeUnit maximumTimeUnit) {
-        Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
+        Objects.requireNonNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new FibonacciWaitStrategy(1, maximumTimeUnit.toMillis(maximumTime));
     }
 
@@ -193,7 +194,7 @@ public final class WaitStrategies {
     public static WaitStrategy fibonacciWait(long multiplier,
                                              long maximumTime,
                                              @Nonnull TimeUnit maximumTimeUnit) {
-        Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
+        Objects.requireNonNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new FibonacciWaitStrategy(multiplier, maximumTimeUnit.toMillis(maximumTime));
     }
 
@@ -208,8 +209,8 @@ public final class WaitStrategies {
      */
     public static <T extends Throwable> WaitStrategy exceptionWait(@Nonnull Class<T> exceptionClass,
                                                                    @Nonnull Function<T, Long> function) {
-        Preconditions.checkNotNull(exceptionClass, "exceptionClass may not be null");
-        Preconditions.checkNotNull(function, "function may not be null");
+        Objects.requireNonNull(exceptionClass, "exceptionClass may not be null");
+        Objects.requireNonNull(function, "function may not be null");
         return new ExceptionWaitStrategy<>(exceptionClass, function);
     }
 

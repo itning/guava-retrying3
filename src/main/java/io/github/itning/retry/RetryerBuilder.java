@@ -17,11 +17,11 @@
 package io.github.itning.retry;
 
 import com.google.common.base.Preconditions;
-import io.github.itning.retry.strategy.limit.AttemptTimeLimiter;
-import io.github.itning.retry.strategy.limit.AttemptTimeLimiters;
 import io.github.itning.retry.listener.RetryListener;
 import io.github.itning.retry.strategy.block.BlockStrategies;
 import io.github.itning.retry.strategy.block.BlockStrategy;
+import io.github.itning.retry.strategy.limit.AttemptTimeLimiter;
+import io.github.itning.retry.strategy.limit.AttemptTimeLimiters;
 import io.github.itning.retry.strategy.stop.StopStrategies;
 import io.github.itning.retry.strategy.stop.StopStrategy;
 import io.github.itning.retry.strategy.wait.WaitStrategies;
@@ -30,6 +30,7 @@ import io.github.itning.retry.strategy.wait.WaitStrategy;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -67,7 +68,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> withRetryListener(@Nonnull RetryListener listener) {
-        Preconditions.checkNotNull(listener, "listener may not be null");
+        Objects.requireNonNull(listener, "listener may not be null");
         listeners.add(listener);
         return this;
     }
@@ -81,7 +82,7 @@ public class RetryerBuilder<V> {
      * @throws IllegalStateException if a wait strategy has already been set.
      */
     public RetryerBuilder<V> withWaitStrategy(@Nonnull WaitStrategy waitStrategy) throws IllegalStateException {
-        Preconditions.checkNotNull(waitStrategy, "waitStrategy may not be null");
+        Objects.requireNonNull(waitStrategy, "waitStrategy may not be null");
         Preconditions.checkState(this.waitStrategy == null, "a wait strategy has already been set %s", this.waitStrategy);
         this.waitStrategy = waitStrategy;
         return this;
@@ -95,7 +96,7 @@ public class RetryerBuilder<V> {
      * @throws IllegalStateException if a stop strategy has already been set.
      */
     public RetryerBuilder<V> withStopStrategy(@Nonnull StopStrategy stopStrategy) throws IllegalStateException {
-        Preconditions.checkNotNull(stopStrategy, "stopStrategy may not be null");
+        Objects.requireNonNull(stopStrategy, "stopStrategy may not be null");
         Preconditions.checkState(this.stopStrategy == null, "a stop strategy has already been set %s", this.stopStrategy);
         this.stopStrategy = stopStrategy;
         return this;
@@ -110,7 +111,7 @@ public class RetryerBuilder<V> {
      * @throws IllegalStateException if a block strategy has already been set.
      */
     public RetryerBuilder<V> withBlockStrategy(@Nonnull BlockStrategy blockStrategy) throws IllegalStateException {
-        Preconditions.checkNotNull(blockStrategy, "blockStrategy may not be null");
+        Objects.requireNonNull(blockStrategy, "blockStrategy may not be null");
         Preconditions.checkState(this.blockStrategy == null, "a block strategy has already been set %s", this.blockStrategy);
         this.blockStrategy = blockStrategy;
         return this;
@@ -124,7 +125,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> withAttemptTimeLimiter(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter) {
-        Preconditions.checkNotNull(attemptTimeLimiter);
+        Objects.requireNonNull(attemptTimeLimiter);
         this.attemptTimeLimiter = attemptTimeLimiter;
         return this;
     }
@@ -159,7 +160,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> retryIfExceptionOfType(@Nonnull Class<? extends Throwable> exceptionClass) {
-        Preconditions.checkNotNull(exceptionClass, "exceptionClass may not be null");
+        Objects.requireNonNull(exceptionClass, "exceptionClass may not be null");
         rejectionPredicate = rejectionPredicate.or(new ExceptionClassPredicate<>(exceptionClass));
         return this;
     }
@@ -172,7 +173,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> retryIfException(@Nonnull Predicate<Throwable> exceptionPredicate) {
-        Preconditions.checkNotNull(exceptionPredicate, "exceptionPredicate may not be null");
+        Objects.requireNonNull(exceptionPredicate, "exceptionPredicate may not be null");
         rejectionPredicate = rejectionPredicate.or(new ExceptionPredicate<>(exceptionPredicate));
         return this;
     }
@@ -185,7 +186,7 @@ public class RetryerBuilder<V> {
      * @return <code>this</code>
      */
     public RetryerBuilder<V> retryIfResult(@Nonnull Predicate<V> resultPredicate) {
-        Preconditions.checkNotNull(resultPredicate, "resultPredicate may not be null");
+        Objects.requireNonNull(resultPredicate, "resultPredicate may not be null");
         rejectionPredicate = rejectionPredicate.or(new ResultPredicate<>(resultPredicate));
         return this;
     }

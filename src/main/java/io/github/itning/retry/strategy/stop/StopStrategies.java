@@ -16,9 +16,8 @@
 
 package io.github.itning.retry.strategy.stop;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nonnull;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -64,7 +63,7 @@ public final class StopStrategies {
      * @return a stop strategy which stops after {@code delayInMillis} time in milliseconds
      */
     public static StopStrategy stopAfterDelay(long duration, @Nonnull TimeUnit timeUnit) {
-        Preconditions.checkNotNull(timeUnit, "The time unit may not be null");
+        Objects.requireNonNull(timeUnit, "The time unit may not be null");
         return new StopAfterDelayStrategy(timeUnit.toMillis(duration));
     }
 }
