@@ -5,7 +5,7 @@
 
     <groupId>io.github.itning</groupId>
     <artifactId>guava-retrying3</artifactId>
-    <version>3.0.0-BETA0</version>
+    <version>3.0.0-BETA1</version>
     <packaging>jar</packaging>
 
     <name>guava-retrying3</name>
