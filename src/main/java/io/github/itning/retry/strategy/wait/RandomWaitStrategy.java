@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * @author itning
- * @since 2021/9/6 18:23
+ * @since 3.0.0
  */
 @Immutable
 public final class RandomWaitStrategy implements WaitStrategy {

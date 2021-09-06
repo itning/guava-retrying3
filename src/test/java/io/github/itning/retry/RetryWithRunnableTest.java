@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author itning
- * @since 2021/9/6 13:41
+ * @since 3.0.0
  */
 public class RetryWithRunnableTest {
 
