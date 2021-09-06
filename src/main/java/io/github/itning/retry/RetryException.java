@@ -18,8 +18,7 @@ package io.github.itning.retry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
 
 /**
  * An exception indicating that none of the attempts of the {@link Retryer}
@@ -54,7 +53,7 @@ public final class RetryException extends Exception {
      * @param lastFailedAttempt      what happened the last time we failed
      */
     public RetryException(String message, int numberOfFailedAttempts, Attempt<?> lastFailedAttempt) {
-        super(message, checkNotNull(lastFailedAttempt, "Last attempt was null").hasException() ? lastFailedAttempt.getExceptionCause() : null);
+        super(message, Objects.requireNonNull(lastFailedAttempt, "Last attempt was null").hasException() ? lastFailedAttempt.getExceptionCause() : null);
         this.numberOfFailedAttempts = numberOfFailedAttempts;
         this.lastFailedAttempt = lastFailedAttempt;
     }

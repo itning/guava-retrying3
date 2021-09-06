@@ -16,6 +16,7 @@
 
 package io.github.itning.retry;
 
+import io.github.itning.retry.strategy.stop.StopStrategies;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -40,9 +41,9 @@ public class StopStrategiesTest {
 
     @Test
     public void testStopAfterDelayWithMilliseconds() {
-        assertFalse(StopStrategies.stopAfterDelay(1000L).shouldStop(failedAttempt(2, 999L)));
-        assertTrue(StopStrategies.stopAfterDelay(1000L).shouldStop(failedAttempt(2, 1000L)));
-        assertTrue(StopStrategies.stopAfterDelay(1000L).shouldStop(failedAttempt(2, 1001L)));
+        assertFalse(StopStrategies.stopAfterDelay(1000L, TimeUnit.MILLISECONDS).shouldStop(failedAttempt(2, 999L)));
+        assertTrue(StopStrategies.stopAfterDelay(1000L, TimeUnit.MILLISECONDS).shouldStop(failedAttempt(2, 1000L)));
+        assertTrue(StopStrategies.stopAfterDelay(1000L, TimeUnit.MILLISECONDS).shouldStop(failedAttempt(2, 1001L)));
     }
 
     @Test
@@ -53,6 +54,6 @@ public class StopStrategiesTest {
     }
 
     public Attempt<Boolean> failedAttempt(long attemptNumber, long delaySinceFirstAttempt) {
-        return new Retryer.ExceptionAttempt<Boolean>(new RuntimeException(), attemptNumber, delaySinceFirstAttempt);
+        return new Retryer.ExceptionAttempt<>(new RuntimeException(), attemptNumber, delaySinceFirstAttempt);
     }
 }

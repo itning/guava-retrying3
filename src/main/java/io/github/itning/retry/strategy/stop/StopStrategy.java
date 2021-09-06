@@ -14,20 +14,22 @@
  * limitations under the License.
  */
 
-package io.github.itning.retry;
+package io.github.itning.retry.strategy.stop;
+
+import io.github.itning.retry.Attempt;
 
 /**
- * A strategy used to decide how long to sleep before retrying after a failed attempt.
+ * A strategy used to decide if a retryer must stop retrying after a failed attempt or not.
  *
  * @author JB
  */
-public interface WaitStrategy {
+public interface StopStrategy {
 
     /**
-     * Returns the time, in milliseconds, to sleep before retrying.
+     * Returns <code>true</code> if the retryer should stop retrying.
      *
      * @param failedAttempt the previous failed {@code Attempt}
-     * @return the sleep time before next attempt
+     * @return <code>true</code> if the retryer must stop, <code>false</code> otherwise
      */
-    long computeSleepTime(Attempt failedAttempt);
+    boolean shouldStop(Attempt failedAttempt);
 }
