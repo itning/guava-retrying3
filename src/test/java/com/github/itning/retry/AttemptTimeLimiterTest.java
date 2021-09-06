@@ -16,12 +16,12 @@
 
 package com.github.itning.retry;
 
-import com.google.common.util.concurrent.UncheckedTimeoutException;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class AttemptTimeLimiterTest {
 
     Retryer<Void> r = RetryerBuilder.<Void>newBuilder()
-            .withAttemptTimeLimiter(AttemptTimeLimiters.<Void>fixedTimeLimit(1, TimeUnit.SECONDS))
+            .withAttemptTimeLimiter(AttemptTimeLimiters.fixedTimeLimit(1, TimeUnit.SECONDS))
             .build();
 
     @Test
@@ -48,7 +48,7 @@ public class AttemptTimeLimiterTest {
             fail("Expected timeout exception");
         } catch (ExecutionException e) {
             // expected
-            assertEquals(UncheckedTimeoutException.class, e.getCause().getClass());
+            assertEquals(TimeoutException.class, e.getCause().getClass());
         }
     }
 

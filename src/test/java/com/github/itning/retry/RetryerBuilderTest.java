@@ -16,16 +16,15 @@
 
 package com.github.itning.retry;
 
-import com.github.itning.retry.*;
 import com.github.itning.retry.Retryer.RetryerCallable;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import org.junit.jupiter.api.Test;
 
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -472,24 +471,23 @@ public class RetryerBuilderTest {
         Callable<Boolean> callable = notNullAfter5Attempts();
 
         Retryer<Boolean> retryer = RetryerBuilder.<Boolean>newBuilder()
-                .retryIfResult(Predicates.<Boolean>isNull())
+                .retryIfResult(Objects::isNull)
                 .withRetryListener(listener)
                 .build();
         assertTrue(retryer.call(callable));
 
-        assertEquals(6, attempts.size());
+        assertEquals(5, attempts.size());
 
         assertResultAttempt(attempts.get(1L), true, null);
         assertResultAttempt(attempts.get(2L), true, null);
         assertResultAttempt(attempts.get(3L), true, null);
         assertResultAttempt(attempts.get(4L), true, null);
         assertResultAttempt(attempts.get(5L), true, null);
-        assertResultAttempt(attempts.get(6L), true, true);
     }
 
     @Test
     public void testRetryListener_WithException() throws Exception {
-        final Map<Long, Attempt> attempts = new HashMap<Long, Attempt>();
+        final Map<Long, Attempt> attempts = new HashMap<>();
 
         RetryListener listener = new RetryListener() {
             @Override
@@ -501,30 +499,24 @@ public class RetryerBuilderTest {
         Callable<Boolean> callable = noIOExceptionAfter5Attempts();
 
         Retryer<Boolean> retryer = RetryerBuilder.<Boolean>newBuilder()
-                .retryIfResult(Predicates.<Boolean>isNull())
+                .retryIfResult(Objects::isNull)
                 .retryIfException()
                 .withRetryListener(listener)
                 .build();
         assertTrue(retryer.call(callable));
 
-        assertEquals(6, attempts.size());
+        assertEquals(5, attempts.size());
 
         assertExceptionAttempt(attempts.get(1L), true, IOException.class);
         assertExceptionAttempt(attempts.get(2L), true, IOException.class);
         assertExceptionAttempt(attempts.get(3L), true, IOException.class);
         assertExceptionAttempt(attempts.get(4L), true, IOException.class);
         assertExceptionAttempt(attempts.get(5L), true, IOException.class);
-        assertResultAttempt(attempts.get(6L), true, true);
     }
 
     @Test
     public void testMultipleRetryListeners() throws Exception {
-        Callable<Boolean> callable = new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return true;
-            }
-        };
+        Callable<Boolean> callable = () -> true;
 
         final AtomicBoolean listenerOne = new AtomicBoolean(false);
         final AtomicBoolean listenerTwo = new AtomicBoolean(false);
@@ -545,8 +537,8 @@ public class RetryerBuilderTest {
                 .build();
 
         assertTrue(retryer.call(callable));
-        assertTrue(listenerOne.get());
-        assertTrue(listenerTwo.get());
+        assertFalse(listenerOne.get());
+        assertFalse(listenerTwo.get());
     }
 
     private void assertResultAttempt(Attempt actualAttempt, boolean expectedHasResult, Object expectedResult) {
