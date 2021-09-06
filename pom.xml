@@ -5,11 +5,11 @@
 
     <groupId>com.github.itning</groupId>
     <artifactId>guava-retrying-3</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>3.0.0-BETA0</version>
     <packaging>jar</packaging>
 
     <name>guava-retrying-3</name>
-    <description>guava-retrying-3</description>
+    <description>guava retrying 3 is a basic guava retry library</description>
 
     <properties>
         <java.version>1.8</java.version>
