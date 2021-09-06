@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.itning.retry;
+package io.github.itning.retry.listener;
+
+import io.github.itning.retry.Attempt;
+import io.github.itning.retry.Retryer;
 
 /**
  * This listener provides callbacks for several events that occur when running

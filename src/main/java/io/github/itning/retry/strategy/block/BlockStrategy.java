@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.itning.retry;
+package io.github.itning.retry.strategy.block;
+
+import io.github.itning.retry.strategy.wait.WaitStrategy;
 
 /**
  * This is a strategy used to decide how a retryer should block between retry

@@ -19,6 +19,10 @@ package io.github.itning.retry;
 import io.github.itning.retry.Retryer.RetryerCallable;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import io.github.itning.retry.listener.RetryListener;
+import io.github.itning.retry.strategy.block.BlockStrategy;
+import io.github.itning.retry.strategy.stop.StopStrategies;
+import io.github.itning.retry.strategy.wait.WaitStrategies;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

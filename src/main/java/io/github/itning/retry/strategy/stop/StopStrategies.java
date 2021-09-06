@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package io.github.itning.retry;
-
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+package io.github.itning.retry.strategy.stop;
 
 import com.google.common.base.Preconditions;
+
+import javax.annotation.Nonnull;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Factory class for {@link StopStrategy} instances.
@@ -29,7 +27,6 @@ import com.google.common.base.Preconditions;
  * @author JB
  */
 public final class StopStrategies {
-    private static final StopStrategy NEVER_STOP = new NeverStopStrategy();
 
     private StopStrategies() {
     }
@@ -42,7 +39,7 @@ public final class StopStrategies {
      * @return a stop strategy which never stops
      */
     public static StopStrategy neverStop() {
-        return NEVER_STOP;
+        return NeverStopStrategy.INSTANCE;
     }
 
     /**
@@ -85,43 +82,5 @@ public final class StopStrategies {
     public static StopStrategy stopAfterDelay(long duration, @Nonnull TimeUnit timeUnit) {
         Preconditions.checkNotNull(timeUnit, "The time unit may not be null");
         return new StopAfterDelayStrategy(timeUnit.toMillis(duration));
-    }
-
-    @Immutable
-    private static final class NeverStopStrategy implements StopStrategy {
-        @Override
-        public boolean shouldStop(Attempt failedAttempt) {
-            return false;
-        }
-    }
-
-    @Immutable
-    private static final class StopAfterAttemptStrategy implements StopStrategy {
-        private final int maxAttemptNumber;
-
-        public StopAfterAttemptStrategy(int maxAttemptNumber) {
-            Preconditions.checkArgument(maxAttemptNumber >= 1, "maxAttemptNumber must be >= 1 but is %s", maxAttemptNumber);
-            this.maxAttemptNumber = maxAttemptNumber;
-        }
-
-        @Override
-        public boolean shouldStop(Attempt failedAttempt) {
-            return failedAttempt.getAttemptNumber() >= maxAttemptNumber;
-        }
-    }
-
-    @Immutable
-    private static final class StopAfterDelayStrategy implements StopStrategy {
-        private final long maxDelay;
-
-        public StopAfterDelayStrategy(long maxDelay) {
-            Preconditions.checkArgument(maxDelay >= 0L, "maxDelay must be >= 0 but is %s", maxDelay);
-            this.maxDelay = maxDelay;
-        }
-
-        @Override
-        public boolean shouldStop(Attempt failedAttempt) {
-            return failedAttempt.getDelaySinceFirstAttempt() >= maxDelay;
-        }
     }
 }

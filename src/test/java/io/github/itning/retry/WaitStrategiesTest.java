@@ -18,6 +18,8 @@ package io.github.itning.retry;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Sets;
+import io.github.itning.retry.strategy.wait.WaitStrategies;
+import io.github.itning.retry.strategy.wait.WaitStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
