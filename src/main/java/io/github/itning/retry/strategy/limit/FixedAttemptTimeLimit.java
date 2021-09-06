@@ -26,6 +26,15 @@ public final class FixedAttemptTimeLimit<V> implements AttemptTimeLimiter<V> {
     private final long duration;
     private final TimeUnit timeUnit;
 
+
+    /**
+     * constructor
+     *
+     * @param duration duration
+     * @param timeUnit timeUnit
+     * @deprecated use {@link #FixedAttemptTimeLimit(long, TimeUnit, ExecutorService)} instead
+     */
+    @Deprecated
     public FixedAttemptTimeLimit(long duration, @Nonnull TimeUnit timeUnit) {
         this(SimpleTimeLimiter.create(EXECUTOR_SERVICE), duration, timeUnit);
     }

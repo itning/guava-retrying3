@@ -50,7 +50,9 @@ public class AttemptTimeLimiters {
      * @param timeUnit of the 'duration' arg
      * @param <V>      the type of the computation result
      * @return an {@link AttemptTimeLimiter} with a fixed time limit for each attempt
+     * @deprecated use {@link #fixedTimeLimit(long, TimeUnit, ExecutorService)} instead
      */
+    @Deprecated
     public static <V> AttemptTimeLimiter<V> fixedTimeLimit(long duration, @Nonnull TimeUnit timeUnit) {
         Objects.requireNonNull(timeUnit);
         return new FixedAttemptTimeLimit<>(duration, timeUnit);
