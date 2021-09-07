@@ -24,6 +24,13 @@ A basic guava retry library.
 # Notice
 This is a personal maintenance version, which is not compatible with the API of the [original library](https://github.com/rholder/guava-retrying)
 
+**Incompatible changes**
+
+- Package structure modification
+- [RetryListener](https://github.com/itning/guava-retrying3/blob/main/src/main/java/io/github/itning/retry/listener/RetryListener.java#L34) now only calls back the onRetry method when a retry occurs
+- Replace the project build tool from gradle to maven
+- Package name from `com.github.rholder.retry.*` to `io.github.itning.retry.*`
+
 # What is this?
 The guava-retrying module provides a general purpose method for retrying arbitrary Java code with specific stop, retry,
 and exception handling capabilities that are enhanced by Guava's predicate matching.
