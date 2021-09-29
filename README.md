@@ -47,13 +47,13 @@ that might be useful for situations where more well-behaved service polling is p
 <dependency>
     <groupId>io.github.itning</groupId>
     <artifactId>guava-retrying3</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
 </dependency>
 ```
 
 # Gradle
 ```groovy
-implementation "io.github.itning:guava-retrying3:3.0.0"
+implementation "io.github.itning:guava-retrying3:3.0.1"
 ```
 
 # Quickstart
