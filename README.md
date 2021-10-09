@@ -57,15 +57,15 @@ If you don't use `io.github.itning.retry.strategy.limit.FixedAttemptTimeLimit` i
 
 ```xml
 <dependency>
-	<groupId>io.github.itning</groupId>
-	<artifactId>guava-retrying3</artifactId>
-	<version>3.0.1</version>
-	<exclusions>
-		<exclusion>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</exclusion>
-	</exclusions>
+    <groupId>io.github.itning</groupId>
+    <artifactId>guava-retrying3</artifactId>
+    <version>3.0.1</version>
+    <exclusions>
+        <exclusion>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </exclusion>
+    </exclusions>
 </dependency>
 ```
 
