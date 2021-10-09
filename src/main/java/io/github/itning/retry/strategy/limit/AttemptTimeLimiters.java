@@ -16,7 +16,6 @@
 
 package io.github.itning.retry.strategy.limit;
 
-import com.google.common.util.concurrent.SimpleTimeLimiter;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -43,7 +42,7 @@ public class AttemptTimeLimiters {
 
     /**
      * For control over thread management.
-     * See the note on {@link SimpleTimeLimiter#create(ExecutorService)}, which this AttemptTimeLimiter uses.
+     * See the note on {@link com.google.common.util.concurrent.SimpleTimeLimiter#create(ExecutorService)}, which this AttemptTimeLimiter uses.
      *
      * @param duration        that an attempt may persist before being circumvented
      * @param timeUnit        of the 'duration' arg
