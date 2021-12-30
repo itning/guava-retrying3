@@ -27,4 +27,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: compile with Maven
-        run: mvn -B compile --file pom.xml
+        run: mvn -B test --file pom.xml
