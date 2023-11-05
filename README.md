@@ -47,7 +47,7 @@ that might be useful for situations where more well-behaved service polling is p
 <dependency>
     <groupId>io.github.itning</groupId>
     <artifactId>guava-retrying3</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
 </dependency>
 ```
 
@@ -59,7 +59,7 @@ If you don't use `io.github.itning.retry.strategy.limit.FixedAttemptTimeLimit` i
 <dependency>
     <groupId>io.github.itning</groupId>
     <artifactId>guava-retrying3</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
     <exclusions>
         <exclusion>
             <groupId>com.google.guava</groupId>
@@ -72,7 +72,7 @@ If you don't use `io.github.itning.retry.strategy.limit.FixedAttemptTimeLimit` i
 # Gradle
 
 ```groovy
-implementation "io.github.itning:guava-retrying3:3.0.2"
+implementation "io.github.itning:guava-retrying3:3.0.3"
 ```
 
 # Quickstart
