@@ -16,7 +16,7 @@ A basic guava retry library.
 [![GitHub last commit](https://img.shields.io/github/last-commit/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3/commits)
 [![GitHub release](https://img.shields.io/github/release/itning/guava-retrying3.svg)](https://search.maven.org/artifact/io.github.itning/guava-retrying3)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/itning/guava-retrying3.svg)](https://github.com/itning/guava-retrying3)
-![HitCount](https://hitcount.itning.top/?u=itning&r=guava-retrying3)
+![HitCount](https://hitcount.itning.com/?u=itning&r=guava-retrying3)
 [![language](https://img.shields.io/badge/language-JAVA-green.svg)](https://github.com/itning/guava-retrying3)
 
 </div>
