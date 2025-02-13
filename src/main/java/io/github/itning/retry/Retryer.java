@@ -55,7 +55,7 @@ public final class Retryer<V> {
     private final BlockStrategy blockStrategy;
     private final AttemptTimeLimiter<V> attemptTimeLimiter;
     private final Predicate<Attempt<V>> rejectionPredicate;
-    private final Collection<RetryListener> listeners;
+    private final Collection<RetryListener<V>> listeners;
 
     /**
      * Constructor
@@ -126,7 +126,7 @@ public final class Retryer<V> {
                    @Nonnull WaitStrategy waitStrategy,
                    @Nonnull BlockStrategy blockStrategy,
                    @Nonnull Predicate<Attempt<V>> rejectionPredicate,
-                   @Nonnull Collection<RetryListener> listeners) {
+                   @Nonnull Collection<RetryListener<V>> listeners) {
         Objects.requireNonNull(attemptTimeLimiter, "timeLimiter may not be null");
         Objects.requireNonNull(stopStrategy, "stopStrategy may not be null");
         Objects.requireNonNull(waitStrategy, "waitStrategy may not be null");
@@ -175,7 +175,7 @@ public final class Retryer<V> {
                 throw new RetryException(attemptNumber, attempt);
             } else {
 
-                for (RetryListener listener : listeners) {
+                for (RetryListener<V> listener : listeners) {
                     listener.onRetry(attempt);
                 }
 

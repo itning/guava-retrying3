@@ -22,14 +22,16 @@ import io.github.itning.retry.Retryer;
 /**
  * This listener provides callbacks for several events that occur when running
  * code through a {@link Retryer} instance.
+ *
+ * @param <V> the type returned by the retryer callable
  */
-public interface RetryListener {
+@FunctionalInterface
+public interface RetryListener<V> {
 
     /**
      * The listener method will be triggered if and only when retrying
      *
      * @param attempt the current {@link Attempt}
-     * @param <V>     the type returned by the retryer callable
      */
-    <V> void onRetry(Attempt<V> attempt);
+    void onRetry(Attempt<V> attempt);
 }
