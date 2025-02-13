@@ -1,7 +1,6 @@
 package io.github.itning.retry;
 
 import io.github.itning.retry.strategy.limit.AttemptTimeLimiters;
-import io.github.itning.retry.listener.RetryListener;
 import io.github.itning.retry.strategy.stop.StopStrategies;
 import io.github.itning.retry.strategy.wait.WaitStrategies;
 import org.junit.jupiter.api.Test;
@@ -24,12 +23,7 @@ public class RetryWithRunnableTest {
         AtomicInteger atomicInteger = new AtomicInteger();
         Retryer<Void> retryer = RetryerBuilder.<Void>newBuilder()
                 .retryIfException()
-                .withRetryListener(new RetryListener() {
-                    @Override
-                    public <V> void onRetry(Attempt<V> attempt) {
-
-                    }
-                })
+                .withRetryListener(attempt -> {})
                 .withWaitStrategy(WaitStrategies.fixedWait(1, TimeUnit.SECONDS))
                 .withStopStrategy(StopStrategies.stopAfterAttempt(5))
                 .withAttemptTimeLimiter(AttemptTimeLimiters.noTimeLimit())

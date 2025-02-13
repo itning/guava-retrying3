@@ -45,7 +45,7 @@ public class RetryerBuilder<V> {
     private WaitStrategy waitStrategy;
     private BlockStrategy blockStrategy;
     private Predicate<Attempt<V>> rejectionPredicate = vAttempt -> false;
-    private final List<RetryListener> listeners = new ArrayList<>();
+    private final List<RetryListener<V>> listeners = new ArrayList<>();
 
     private RetryerBuilder() {
     }
@@ -66,7 +66,7 @@ public class RetryerBuilder<V> {
      * @param listener Listener to add
      * @return <code>this</code>
      */
-    public RetryerBuilder<V> withRetryListener(@Nonnull RetryListener listener) {
+    public RetryerBuilder<V> withRetryListener(@Nonnull RetryListener<V> listener) {
         Objects.requireNonNull(listener, "listener may not be null");
         listeners.add(listener);
         return this;
