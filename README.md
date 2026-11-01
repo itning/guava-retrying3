@@ -153,7 +153,7 @@ Inspiration for this implementation came from [Efficient retry/backoff mechanism
 
 # Building from source
 The guava-retrying module uses a [maven](https://maven.apache.org/)-based build system. 
-The only prerequisites are [Git](https://help.github.com/articles/set-up-git) and JDK 1.8+.
+The only prerequisites are [Git](https://help.github.com/articles/set-up-git) and JDK 17+ (the build targets Java 8 bytecode for runtime compatibility, but the test suite uses JUnit 6 which requires JDK 17+).
 
 ## check out sources
 `git clone git://github.com/itning/guava-retrying3.git`
